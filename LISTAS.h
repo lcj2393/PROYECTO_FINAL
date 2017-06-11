@@ -37,6 +37,7 @@ void edit_LD();//EDITAR ELEMENTOS EN LA LISTA DOBLEMENTE ENLAZADA
 void elim_LD();//ELIMINAR ELEMENTOS DE LA LISTA DOBLEMENTE ENLAZADA
 
     Nodo *pila;
+    Nodo *comienzo;
     Nodo *inicio;
     Nodo *fin;
 
@@ -221,12 +222,12 @@ void edit_elemento_FIFO(){//FUNCION PARA EDITAR ELEMENTO DE LA COLA
 
 //FUNCIONES DE LISTA SIMPLE
 void iniciar_LISTA(){
-    Nodo *inicio=NULL, *fin=NULL;
+    Nodo *comienzo=NULL, *fin=NULL;
 }
 void most_Lista(){//FUNCION PARA MOSTRAR LOS ELEMENTOS DE LA LISTA
     Nodo* aux = ReservaMemoria;
-    aux = inicio;
-    if(inicio != NULL){
+    aux = comienzo;
+    if(comienzo != NULL){
         while(aux != NULL){
             printf("\n     %d", aux -> dato);
             aux = aux -> Siguiente;
@@ -237,11 +238,11 @@ void most_Lista(){//FUNCION PARA MOSTRAR LOS ELEMENTOS DE LA LISTA
 }
 void busc_LISTA(){//FUNCION PARA BUSCAR UN ELEMENTO EN LA LISTA
     Nodo* aux = ReservaMemoria;
-    aux = inicio;
+    aux = comienzo;
     int nodo_consultado = 0, encontrado = 0;
     printf("\nDigite Dato a Consultar: ");
     scanf("%d", &nodo_consultado);
-    if(inicio != NULL){
+    if(comienzo != NULL){
         while(aux != NULL){
             if(aux->dato == nodo_consultado){
                 printf("\nEl Valor ( %d ) - Se encuentra en la Lista\n", nodo_consultado);
@@ -258,11 +259,11 @@ void busc_LISTA(){//FUNCION PARA BUSCAR UN ELEMENTO EN LA LISTA
 }
 void edit_LISTA(){//FUNCION PARA EDITAR LOS ELEMENTOS DE UNA LISTA
     Nodo* aux = ReservaMemoria;
-    aux = inicio;
+    aux = comienzo;
     int nodo_consultado = 0, encontrado = 0;
     printf("\nDigite dato a buscar en la lista para ser modificado: ");
     scanf("%d", &nodo_consultado);
-    if(inicio != NULL){
+    if(comienzo != NULL){
         while(aux != NULL){
             if(aux->dato == nodo_consultado){
                 printf("\nDato Encontrado ( %d )\n", nodo_consultado);
@@ -282,17 +283,17 @@ void edit_LISTA(){//FUNCION PARA EDITAR LOS ELEMENTOS DE UNA LISTA
 }
 void elim_elemento_LISTA(){//FUNION PARA ELIMINAR ELEMENTOS DE UNA LISTA
     Nodo* aux = ReservaMemoria;
-    aux = inicio;
+    aux = comienzo;
     Nodo* anterior = ReservaMemoria;
     anterior = NULL;
     int nodo_consultado = 0, encontrado = 0;
     printf("\nIngrese dato a buscar para eliminar: ");
     scanf("%d", &nodo_consultado);
-    if(inicio != NULL){
+    if(comienzo != NULL){
         while(aux != NULL && encontrado != 1){
             if(aux->dato == nodo_consultado){
-                if(aux == inicio){
-                    inicio = inicio -> Siguiente;
+                if(aux == comienzo){
+                    comienzo = comienzo -> Siguiente;
                 }else{
                     anterior -> Siguiente = aux -> Siguiente;
                 }
@@ -316,11 +317,11 @@ void buscar_LISTA(){//FUNCION PARA BUSCAR ELEMENOS EN LA LISTA
   control=0;
   printf("\nIngrese numero a buscar: \n");
   scanf("%d",&b);
-    while (inicio!=NULL && control==0){
-        if(inicio->dato==b){
+    while (comienzo!=NULL && control==0){
+        if(comienzo->dato==b){
             control=1;
         }
-            inicio=inicio->Siguiente;
+            comienzo=comienzo->Siguiente;
     }
     if(control==1){
        printf("\nEl numero buscado si existe en la Lista! \n");
@@ -330,9 +331,9 @@ void buscar_LISTA(){//FUNCION PARA BUSCAR ELEMENOS EN LA LISTA
 }
 int tam_LISTA(){//FUNCION PARA SABER EL TAMAÑO DE LA LISTA
 int cant = 0;
-while(inicio!=NULL){
+while(comienzo!=NULL){
     cant++;
-    inicio = inicio->Siguiente;
+    comienzo = comienzo->Siguiente;
     }
   return cant;
 }
@@ -342,7 +343,7 @@ void insert_may_men_LISTA(){//FUNCION PARA ORDENAR LISTA DE MAYOR A MENOR
      next=ReservaMemoria;
      int t;
 
-     aux2 = inicio;
+     aux2 = comienzo;
      while(aux2->Siguiente != NULL){
           next = aux2->Siguiente;
           while(next!=NULL){
@@ -365,7 +366,7 @@ void insert_men_may_LISTA(){//FUNCION PARA ORDENAR DATOS DE MENOR A MAYOR
      next=ReservaMemoria;
      int t;
 
-     aux2 = inicio;
+     aux2 = comienzo;
      while(aux2->Siguiente != NULL){
           next = aux2->Siguiente;
           while(next!=NULL){

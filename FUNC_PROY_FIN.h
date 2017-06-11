@@ -17,9 +17,9 @@ void llenadoArchivo();/**FUNCION PARA GUARDAR DATOS EN ARCHIVO**/
 void metOrdBurbujaCola();/**FUNCION PARA METODO DE ODENAMIENTO BUSBUJA**/
 void metOrdBurbujaLista();/**FUNCION PARA METODO DE ODENAMIENTO BUSBUJA**/
 void metOrdBurbujaPila();/**FUNCION PARA METODO DE ODENAMIENTO BUSBUJA PILA**/
-void metOrdInsercionCola();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
-void metOrdInsercionPila();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
-void metOrdInsercionLista();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+void metOrdSeleccionCola();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+void metOrdSeleccionLista();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+void metOrdSeleccionPila();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
 void metOrdQuickSort();/**FUNCION PARA METODO DE ODENAMIENTO QUICK SORT**/
 
 void menuProyecto(){/**FUNCION MENU PRINCIPAL PROYECTO FINAL**/
@@ -77,7 +77,7 @@ void menuColas(){/**FUNCION MENU COLAS**/
         printf("\n\t\t\tMENU COLAS\n\n");
         printf("1). Mostrar la Cola.\n");
         printf("2). Aplicar Metodo de Ordenamiento Burbuja.\n");
-        printf("3). Aplicar Metodo de Ordenamiento Insercion.\n");
+        printf("3). Aplicar Metodo de Ordenamiento Seleccion.\n");
         printf("4). Aplicar Metodo de Ordenamiento Quick Sort.\n");
         printf("0). Salir al menu principal\n\n");
         printf("Seleccione una opcion: ");
@@ -101,7 +101,7 @@ void menuColas(){/**FUNCION MENU COLAS**/
             case 3:
                 system("cls");
                 printf("\n\t\t\tMETODO INSERCION EN COLAS\n\n");
-                metOrdInsercionCola();
+                metOrdSeleccionCola();
                 break;
             case 4:
                 system("cls");
@@ -121,7 +121,7 @@ void menuListas(){/**FUNCION MENU LISTAS**/
         printf("\n\t\t\tMENU LISTAS\n\n");
         printf("1). Insertar datos de Archivo a Lista.\n");
         printf("2). Aplicar Metodo de Ordenamiento Burbuja.\n");
-        printf("3). Aplicar Metodo de Ordenamiento Insercion.\n");
+        printf("3). Aplicar Metodo de Ordenamiento Seleccion.\n");
         printf("4). Aplicar Metodo de Ordenamiento Quick Sort.\n");
         printf("0). Salir al menu principal\n\n");
         printf("Seleccione una opcion: \n\n");
@@ -145,7 +145,7 @@ void menuListas(){/**FUNCION MENU LISTAS**/
             case 3:
                 system("cls");
                 printf("\n\t\t\tMETODO INSERCION EN LISTA\n\n");
-                metOrdInsercionLista();
+                metOrdSeleccionLista();
                 break;
             case 4:
                 system("cls");
@@ -164,7 +164,7 @@ void menuPilas(){/**FUNCION MENU PILA**/
         printf("\n\t\t\tMENU PILAS\n\n");
         printf("1). Mostrar la Pila.\n");
         printf("2). Aplicar Metodo de Ordenamiento Burbuja.\n");
-        printf("3). Aplicar Metodo de Ordenamiento Insercion.\n");
+        printf("3). Aplicar Metodo de Ordenamiento Seleccion.\n");
         printf("4). Aplicar Metodo de Ordenamiento Quick Sort.\n");
         printf("0). Salir al menu principal\n\n");
         printf("Seleccione una opcion: \n\n");
@@ -188,7 +188,7 @@ void menuPilas(){/**FUNCION MENU PILA**/
             case 3:
                 system("cls");
                 printf("\n\t\t\tMETODO INSERCION EN PILA\n\n");
-                metOrdInsercionPila();
+                metOrdSeleccionPila();
                 break;
             case 4:
                 system("cls");
@@ -225,17 +225,17 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
             case 2:
                 system("cls");
                 printf("\n\t\t\tMETODO BURBUJA EN ARBOL\n\n");
-                metOrdBurbujaLista();
+
                 break;
             case 3:
                 system("cls");
                 printf("\n\t\t\tMETODO INSERCION EN ARBOL\n\n");
-                metOrdInsercionPila();
+
                 break;
             case 4:
                 system("cls");
                 printf("\n\t\t\tMETODO QUICK SORT EN ARBOL\n\n");
-                metOrdQuickSort();
+
                 break;
             default:
                 system("cls");
@@ -375,7 +375,7 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     printf("\nEn orden   seria asi: \n\n");
     most_LIFO();
 }
-void metOrdInsercionCola(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+/**OK**/void metOrdSeleccionCola(){/**FUNCION PARA METODO DE ODENAMIENTO SELECCION**/
     documento=fopen("Metodo_Insercion_Cola.txt","w");
     if(inicio != NULL){
 		Nodo *p=ReservaMemoria;
@@ -405,7 +405,7 @@ void metOrdInsercionCola(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
     printf("\nEn orden   seria asi: \n\n");
     most_FIFO();
 }
-void metOrdInsercionLista(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+/**OK**/void metOrdSeleccionLista(){/**FUNCION PARA METODO DE ODENAMIENTO SELECCION**/
     documento=fopen("Metodo_Seleccion_Lista.txt","w");
     if(inicio != NULL){
 		Nodo *p=ReservaMemoria;
@@ -431,12 +431,12 @@ void metOrdInsercionLista(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
 		printf("La lista esta vacia");
 	}
 }
-void metOrdInsercionPila(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+/**OK**/void metOrdSeleccionPila(){/**FUNCION PARA METODO DE ODENAMIENTO SELECCION**/
     documento=fopen("Metodo_Seleccion_Pila.txt","w");
-    if(inicio != NULL){
+    if(pila != NULL){
 		Nodo *p=ReservaMemoria;
 		Nodo *j=ReservaMemoria;
-		p=inicio;
+		p=pila;
 		while(p!=NULL){
             menor=p->dato;
             j=p;
@@ -460,9 +460,41 @@ void metOrdInsercionPila(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
     system("pause");
     printf("\n\nEn orden seria asi: \n\n");
     most_LIFO();
-
 }
-void metOrdQuickSort(){
+
+/**OK**/void metOrdInsercionPila(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+    documento=fopen("Metodo_Insercion_Pila.txt","w");
+    if(pila != NULL){
+		Nodo *p=ReservaMemoria;
+		Nodo *j=ReservaMemoria;
+		p=pila;
+		while(p!=NULL){
+            menor=p->dato;
+            j=p;
+            while(j!=NULL){
+                if(menor>j->dato){
+                    menor=j->dato;
+                    aux=p->dato;
+                    p->dato=menor;
+                    j->dato=aux;
+                    fputc(aux,documento);
+                    putc(',',documento);
+                }
+                j=j->Siguiente;
+            }
+            p=p->Siguiente;
+		}
+	}else{
+		printf("La lista esta vacia");
+	}
+    printf("\n\nHa finalizado el ordenamiento!!\n\n");
+    system("pause");
+    printf("\n\nEn orden seria asi: \n\n");
+    most_LIFO();
+}
+
+
+/**OK**/void metOrdQuickSort(){
     for(i=0;i<millon;i++){
         pos = i;
         aux = a[i];
@@ -480,7 +512,7 @@ void metOrdQuickSort(){
     printf("\nEn orden   seria asi: \n\n");
 
 }
-void inserArchivoPila(){
+/**OK**/void inserArchivoPila(){
     char num;
     FILE *documento;
  	documento = fopen ( "Archivo_1Millon.txt", "r" );

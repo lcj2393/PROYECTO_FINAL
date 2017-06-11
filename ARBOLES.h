@@ -10,6 +10,8 @@ struct Nodo{
     Nodo *Anterior;
 };
 
+Nodo *arbol=NULL;
+
 void insNodo(Nodo *&,int);/**FUNCION INSERTAR EN NODO**/
 bool buscNodo(Nodo *,int);/**FUNCION PARA BUSCAR NODOS EN EL ARBOL**/
 void modNodo(Nodo *&,int);/**FUNCION PARA MODIFICAR NODO DEL ARBOL**/

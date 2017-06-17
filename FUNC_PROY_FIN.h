@@ -1,7 +1,8 @@
-#define millon 1000
+#define millon 100000
+#include <time.h>
 
 long long int a[millon];
-long int n,pos,aux, menor;
+long int n,pos,aux, menor, sure, vBuscado;
 long int b=0;
 long int i;
 char numero[7];
@@ -14,13 +15,18 @@ void menuColas();/**FUNCION MENU COLAS**/
 void menuPilas();/**FUNCION MENU PILAS**/
 void menuArboles();/**FUNCION MENU ARBOLES**/
 void llenadoArchivo();/**FUNCION PARA GUARDAR DATOS EN ARCHIVO**/
-void metOrdBurbujaCola();/**FUNCION PARA METODO DE ODENAMIENTO BUSBUJA**/
-void metOrdBurbujaLista();/**FUNCION PARA METODO DE ODENAMIENTO BUSBUJA**/
-void metOrdBurbujaPila();/**FUNCION PARA METODO DE ODENAMIENTO BUSBUJA PILA**/
-void metOrdSeleccionCola();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
-void metOrdSeleccionLista();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
-void metOrdSeleccionPila();/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
-void metOrdQuickSort();/**FUNCION PARA METODO DE ODENAMIENTO QUICK SORT**/
+void leerArchivo();/**FUNCION PARA LEER DATOS DEL ARCHIVO**/
+void metOrdBurbujaCola();/**FUNCION PARA METODO DE ORDENAMIENTO BURBUJA**/
+void metOrdBurbujaLista();/**FUNCION PARA METODO DE ORDENAMIENTO BURBUJA**/
+void metOrdBurbujaPila();/**FUNCION PARA METODO DE ORDENAMIENTO BURBUJA PILA**/
+void metOrdSeleccionCola();/**FUNCION PARA METODO DE ORDENAMIENTO SELECCION**/
+void metOrdSeleccionLista();/**FUNCION PARA METODO DE ORDENAMIENTO SELECCION**/
+void metOrdSeleccionPila();/**FUNCION PARA METODO DE ORDENAMIENTO SELECCION**/
+void inserArchivoPila();/**FUNCION PARA INSERTAR ARCHIVOS A LA PILA DESDE ARCHIVO**/
+void inserArchivoCola();/**FUNCION PARA INSERTAR ARCHIVOS A LA COLA DESDE ARCHIVO**/
+void inserArchivoLista();/**FUNCION PARA INSERTAR ARCHIVOS A LA LISTA DESDE ARCHIVO**/
+void inserArchivoArbol();/**FUNCION PARA INSERTAR ARCHIVOS AL ARBOL DESDE ARCHIVO**/
+
 
 void menuProyecto(){/**FUNCION MENU PRINCIPAL PROYECTO FINAL**/
     int opc;
@@ -35,8 +41,9 @@ void menuProyecto(){/**FUNCION MENU PRINCIPAL PROYECTO FINAL**/
         printf("6). Mostrar Archivo.\n");
         printf("0). Salir\n");
 
-        printf("Seleccione una opcion: \n\n");
+        printf("Seleccione una opcion: ");
         scanf("%d",&opc);
+        printf("\n\n");
         switch(opc){
             case 0:
                 printf("\nHas Salido del Programa!!!");
@@ -62,7 +69,9 @@ void menuProyecto(){/**FUNCION MENU PRINCIPAL PROYECTO FINAL**/
                 printf("\n\n");
                 break;
             case 6:
+                leerArchivo();
                 printf("\n\n");
+                system("pause");
                 break;
             default:
                 system("pause");
@@ -78,7 +87,9 @@ void menuColas(){/**FUNCION MENU COLAS**/
         printf("1). Mostrar la Cola.\n");
         printf("2). Aplicar Metodo de Ordenamiento Burbuja.\n");
         printf("3). Aplicar Metodo de Ordenamiento Seleccion.\n");
-        printf("4). Aplicar Metodo de Ordenamiento Quick Sort.\n");
+        printf("4). Buscar un Valor en la Cola.\n");
+        printf("5). Vaciar Cola.\n");
+        printf("6). Insertar Datos desde Archivo.\n");
         printf("0). Salir al menu principal\n\n");
         printf("Seleccione una opcion: ");
         scanf("%d",&opc);
@@ -96,17 +107,41 @@ void menuColas(){/**FUNCION MENU COLAS**/
             case 2:
                 system("cls");
                 printf("\n\t\t\tMETODO BURBUJA EN COLAS\n\n");
+                printf("\nOrdenando...\n\n");
                 metOrdBurbujaCola();
                 break;
             case 3:
                 system("cls");
                 printf("\n\t\t\tMETODO INSERCION EN COLAS\n\n");
+                printf("\nOrdenando...\n\n");
                 metOrdSeleccionCola();
                 break;
             case 4:
                 system("cls");
-                printf("\n\t\t\tMETODO QUICK SORT EN COLAS\n\n");
-                metOrdQuickSort();
+                printf("\n\t\t\tBUSCAR EN COLAS\n\n");
+                buscar_FIFO();
+                break;
+            case 5:
+                printf("\n\t\tVACIAR COLAS\n\n");
+                printf("Desea vaciar la Cola realmente? <1> Si - <0>No: ");
+                scanf("%d", &sure);
+                if(sure==1){
+                    printf("\n\nVaciando Cola...");
+                    elim_FIFO();
+                    if(inicio==NULL){
+                        printf("\nLa Cola se encuentra Vacia!!\n");
+                    }else{
+                        printf("\nLa Cola no fue vaciada!! :(\n");
+                    }
+                }else{
+                    printf("\n\nOk, regresando al menu...\n");
+                }
+                break;
+            case 6:
+                printf("\n\t\tINSERTAR DESDE ARCHIVO COLAS\n\n");
+                printf("\nInsetando datos...\n");
+                inserArchivoCola();
+                printf("\n\nInsercion finalizada correctamente\n");
                 break;
             default:
                 system("cls");
@@ -122,7 +157,9 @@ void menuListas(){/**FUNCION MENU LISTAS**/
         printf("1). Insertar datos de Archivo a Lista.\n");
         printf("2). Aplicar Metodo de Ordenamiento Burbuja.\n");
         printf("3). Aplicar Metodo de Ordenamiento Seleccion.\n");
-        printf("4). Aplicar Metodo de Ordenamiento Quick Sort.\n");
+        printf("4). Buscar un Valor en la Cola.\n");
+        printf("5). Vaciar Cola.\n");
+        printf("6). Insertar Datos desde Archivo.\n");
         printf("0). Salir al menu principal\n\n");
         printf("Seleccione una opcion: \n\n");
         scanf("%d",&opc);
@@ -140,17 +177,43 @@ void menuListas(){/**FUNCION MENU LISTAS**/
             case 2:
                 system("cls");
                 printf("\n\t\t\tMETODO BURBUJA EN LISTA\n\n");
+                printf("\nOrdenando...\n\n");
                 metOrdBurbujaLista();
+
                 break;
             case 3:
                 system("cls");
-                printf("\n\t\t\tMETODO INSERCION EN LISTA\n\n");
+                printf("\n\t\t\tMETODO SELECCION EN LISTA\n\n");
+                printf("\nOrdenando...\n\n");
                 metOrdSeleccionLista();
+
                 break;
             case 4:
                 system("cls");
-                printf("\n\t\t\tMETODO QUICK SORT EN LISTA\n\n");
-                metOrdQuickSort();
+                printf("\n\t\t\tBUSCAR EN LISTA\n\n");
+                buscar_LISTA();
+                break;
+            case 5:
+                printf("\n\t\tVACIAR LISTA\n\n");
+                printf("Desea vaciar la Lista realmente? <1> Si - <0>No: ");
+                scanf("%d", &sure);
+                if(sure==1){
+                    printf("\n\nVaciando Lista...");
+                    elim_FIFO();
+                    if(inicio==NULL){
+                        printf("\nLa Lista se encuentra Vacia!!\n");
+                    }else{
+                        printf("\nLa Lista no fue vaciada!! :(\n");
+                    }
+                }else{
+                    printf("\n\nOk, regresando al menu...\n");
+                }
+                break;
+            case 6:
+                printf("\n\t\tINSERTAR DESDE ARCHIVO LISTAS\n\n");
+                printf("\nInsetando datos...\n");
+                insert_men_may_LISTA();
+                printf("\n\nInsercion finalizada correctamente\n");
                 break;
             default:
                 system("cls");
@@ -165,7 +228,9 @@ void menuPilas(){/**FUNCION MENU PILA**/
         printf("1). Mostrar la Pila.\n");
         printf("2). Aplicar Metodo de Ordenamiento Burbuja.\n");
         printf("3). Aplicar Metodo de Ordenamiento Seleccion.\n");
-        printf("4). Aplicar Metodo de Ordenamiento Quick Sort.\n");
+        printf("4). Buscar un Valor en la Pila.\n");
+        printf("5). Vaciar Pila.\n");
+        printf("6). Insertar Datos desde Archivo.\n");
         printf("0). Salir al menu principal\n\n");
         printf("Seleccione una opcion: \n\n");
         scanf("%d",&opc);
@@ -183,18 +248,49 @@ void menuPilas(){/**FUNCION MENU PILA**/
             case 2:
                 system("cls");
                 printf("\n\t\t\tMETODO BURBUJA EN PILA\n\n");
+                printf("\nOrdenando...\n\n");
                 metOrdBurbujaPila();
+
+
                 break;
             case 3:
                 system("cls");
                 printf("\n\t\t\tMETODO INSERCION EN PILA\n\n");
+                printf("\nOrdenando...\n\n");
                 metOrdSeleccionPila();
+
                 break;
             case 4:
                 system("cls");
-                printf("\n\t\t\tMETODO QUICK SORT EN PILA\n\n");
-                metOrdQuickSort();
+                printf("\n\t\t\tBUSCAR EN PILA\n\n");
+                printf("\n\nDigite Valo a buscar: ");
+                scanf("%d", &vBuscado);
+                printf("\n\n");
+                buscar_LIFO(pila, vBuscado);
                 break;
+            case 5:
+                printf("\n\t\tVACIAR PILA\n\n");
+                printf("Desea vaciar la Pila realmente? <1> Si - <0>No: ");
+                scanf("%d", &sure);
+                if(sure==1){
+                    printf("\n\nVaciando Pila...");
+                    elim_LIFO();
+                    if(inicio==NULL){
+                        printf("\nLa Pila se encuentra Vacia!!\n");
+                    }else{
+                        printf("\nLa Pila no fue vaciada!! :(\n");
+                    }
+                }else{
+                    printf("\n\nOk, regresando al menu...\n");
+                }
+                break;
+            case 6:
+                printf("\n\t\tINSERTAR DESDE ARCHIVO PILA\n\n");
+                printf("\nInsertando datos...\n");
+                inserArchivoPila();
+                printf("\n\nInsercion finalizada correctamente\n");
+                break;
+
             default:
                 system("cls");
                 printf("\nValor ingresado no valido");
@@ -205,10 +301,10 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     int opc;
     do{
         printf("\n\t\t\tMENU ARBOLES\n\n");
-        printf("1). Insertar datos de Archivo al Arbol.\n");
-        printf("2). Aplicar Metodo de Ordenamiento Burbuja.\n");
-        printf("3). Aplicar Metodo de Ordenamiento Insercion.\n");
-        printf("4). Aplicar Metodo de Ordenamiento Quick Sort.\n");
+        printf("1). Imprimir Arbol Arbol.\n");
+        printf("2). Buscar un Valor en el Arbol.\n");
+        printf("3). Vaciar Arbol.\n");
+        printf("4). Insertar Datos desde Archivo.\n");
         printf("0). Salir al menu principal\n\n");
         printf("Seleccione una opcion: \n\n");
         scanf("%d",&opc);
@@ -220,22 +316,44 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
                 menuProyecto();
                 break;
             case 1:
-                printf("\n\t\t\tINSERTAR ARCHIVO A ARBOL\n\n");
+                printf("\n\t\t\tIMPRIMIR ARBOL\n\n");
+                printf("\nEl Arbol contiene los siguientes datos: \n\n");
+                inOrden(arbol);
                 break;
             case 2:
                 system("cls");
-                printf("\n\t\t\tMETODO BURBUJA EN ARBOL\n\n");
-
+                printf("\n\t\t\tBUSCAR VALOR EN ARBOL\n\n");
+                printf("\nDigite Valor a buscar: ");
+                scanf("%d",&vBuscado);
+                if(buscNodo(arbol,vBuscado)==true){
+                    printf(" El valor %d se encuentra en el Arbol\n\n",vBuscado);
+                }else{
+                    printf(" El valor %d NO se encuentra en el Arbol\n\n",vBuscado);
+                }
                 break;
             case 3:
                 system("cls");
-                printf("\n\t\t\tMETODO INSERCION EN ARBOL\n\n");
-
+                printf("\n\t\t\tVACIAR ARBOL ARBOL\n\n");
+                printf("Desea vaciar Arbol realmente? <1> Si - <0>No: ");
+                scanf("%d", &sure);
+                if(sure==1){
+                    printf("\n\nVaciando Arbol...");
+                    arbol=NULL;
+                    if(arbol==NULL){
+                        printf("\nEl Arbol se encuentra Vacio!!\n");
+                    }else{
+                        printf("\nEl Arbol no fue vaciado!! :(\n");
+                    }
+                }else{
+                    printf("\n\nOk, regresando al menu...\n");
+                }
                 break;
             case 4:
                 system("cls");
-                printf("\n\t\t\tMETODO QUICK SORT EN ARBOL\n\n");
-
+                printf("\n\t\tINSERTAR DESDE ARCHIVO A ARBOL\n\n");
+                printf("\nInsetando datos...\n");
+                inserArchivoArbol();
+                printf("\n\nInsercion finalizada correctamente\n");
                 break;
             default:
                 system("cls");
@@ -258,6 +376,7 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
             sprintf(numero,"%d",n);
             ins_FIFO(inicio, fin, n);
             ins_LIFO(pila, n);
+            insertar_arbol(arbol,n);
             fputs(numero,documento);
             putc(',',documento);
             i++;
@@ -281,11 +400,15 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
         while (feof(documento)==0) {
         printf( "%c",num );
         num = getc(documento);
+
         }
 	}
     fclose(documento);
 }
-/**OK**/void metOrdBurbujaCola(){/**FUNCION PARA METODO DE ODENAMIENTO BURBUJA**/
+/**OK**/void metOrdBurbujaCola(){/**FUNCION PARA METODO DE ORDENAMIENTO BURBUJA**/
+    long inic, fin;
+
+    inic = clock();
     documento=fopen("Metodo_Burbuja.txt","w");
     if(inicio != NULL){
 		Nodo *p=ReservaMemoria;
@@ -314,8 +437,13 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     system("pause");
     printf("\nEn orden   seria asi: \n\n");
     most_FIFO();
+    fin = clock();
+    printf("\n\n tiempo que tardo en ejecucion %f s.\n", (fin-inic)/(float)CLOCKS_PER_SEC);
 }
-/**OK**/void metOrdBurbujaPila(){/**FUNCION PARA METODO DE ODENAMIENTO BURBUJA**/
+/**OK**/void metOrdBurbujaPila(){/**FUNCION PARA METODO DE ORDENAMIENTO BURBUJA**/
+    long inic, fin;
+
+    inic = clock();
     documento=fopen("Metodo_Burbuja_Pila.txt","w");
     if(pila != NULL){
 		Nodo *p=ReservaMemoria;
@@ -344,8 +472,14 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     system("pause");
     printf("\nEn orden   seria asi: \n\n");
     most_LIFO();
+    fin = clock();
+    printf("\n\n tiempo que tardo en ejecucion %f s.\n", (fin-inic)/(float)CLOCKS_PER_SEC);
+
 }
-/**OK**/void metOrdBurbujaLista(){/**FUNCION PARA METODO DE ODENAMIENTO BURBUJA**/
+/**OK**/void metOrdBurbujaLista(){/**FUNCION PARA METODO DE ORDENAMIENTO BURBUJA**/
+    long inic, fin;
+
+    inic = clock();
     documento=fopen("Metodo_Burbuja_Pila.txt","w");
     if(pila != NULL){
 		Nodo *p=ReservaMemoria;
@@ -374,8 +508,13 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     system("pause");
     printf("\nEn orden   seria asi: \n\n");
     most_LIFO();
+    fin = clock();
+    printf("\n\n tiempo que tardo en ejecucion %f s.\n", (fin-inic)/(float)CLOCKS_PER_SEC);
 }
-/**OK**/void metOrdSeleccionCola(){/**FUNCION PARA METODO DE ODENAMIENTO SELECCION**/
+/**OK**/void metOrdSeleccionCola(){/**FUNCION PARA METODO DE ORDENAMIENTO SELECCION**/
+    long inic, fin;
+
+    inic = clock();
     documento=fopen("Metodo_Insercion_Cola.txt","w");
     if(inicio != NULL){
 		Nodo *p=ReservaMemoria;
@@ -404,8 +543,13 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     system("pause");
     printf("\nEn orden   seria asi: \n\n");
     most_FIFO();
+    fin = clock();
+    printf("\n\n tiempo que tardo en ejecucion %f s.\n", (fin-inic)/(float)CLOCKS_PER_SEC);
 }
-/**OK**/void metOrdSeleccionLista(){/**FUNCION PARA METODO DE ODENAMIENTO SELECCION**/
+/**OK**/void metOrdSeleccionLista(){/**FUNCION PARA METODO DE ORDENAMIENTO SELECCION**/
+     long inic, fin;
+
+    inic = clock();
     documento=fopen("Metodo_Seleccion_Lista.txt","w");
     if(inicio != NULL){
 		Nodo *p=ReservaMemoria;
@@ -430,8 +574,13 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
 	}else{
 		printf("La lista esta vacia");
 	}
+	fin = clock();
+    printf("\n\n tiempo que tardo en ejecucion %f s.\n", (fin-inic)/(float)CLOCKS_PER_SEC);
 }
-/**OK**/void metOrdSeleccionPila(){/**FUNCION PARA METODO DE ODENAMIENTO SELECCION**/
+/**OK**/void metOrdSeleccionPila(){/**FUNCION PARA METODO DE ORDENAMIENTO SELECCION**/
+     long inic, fin;
+
+    inic = clock();
     documento=fopen("Metodo_Seleccion_Pila.txt","w");
     if(pila != NULL){
 		Nodo *p=ReservaMemoria;
@@ -460,9 +609,13 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     system("pause");
     printf("\n\nEn orden seria asi: \n\n");
     most_LIFO();
+    fin = clock();
+    printf("\n\n tiempo que tardo en ejecucion %f s.\n", (fin-inic)/(float)CLOCKS_PER_SEC);
 }
+/**OK**/void metOrdInsercionPila(){/**FUNCION PARA METODO DE ORDENAMIENTO INSERCION**/
+      long inic, fin;
 
-/**OK**/void metOrdInsercionPila(){/**FUNCION PARA METODO DE ODENAMIENTO INSERCION**/
+    inic = clock();
     documento=fopen("Metodo_Insercion_Pila.txt","w");
     if(pila != NULL){
 		Nodo *p=ReservaMemoria;
@@ -491,28 +644,10 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
     system("pause");
     printf("\n\nEn orden seria asi: \n\n");
     most_LIFO();
+    fin = clock();
+    printf("\n\n tiempo que tardo en ejecucion %f s.\n", (fin-inic)/(float)CLOCKS_PER_SEC);
 }
-
-
-/**OK**/void metOrdQuickSort(){
-    for(i=0;i<millon;i++){
-        pos = i;
-        aux = a[i];
-        while((pos>0)&&(aux < a[pos-1])){
-            a[pos] = a[pos-1];
-            pos--;
-        }
-        a[pos] = aux;
-    }
-
-    printf("\nHa finalizado el ordenamiento!!\n\n");
-
-    system("pause");
-
-    printf("\nEn orden   seria asi: \n\n");
-
-}
-/**OK**/void inserArchivoPila(){
+/**OK**/void inserArchivoPila(){/**FUNCION PARA INSERTAR ARCHIVOS A LA PILA DESDE ARCHIVO**/
     char num;
     FILE *documento;
  	documento = fopen ( "Archivo_1Millon.txt", "r" );
@@ -527,3 +662,51 @@ void menuArboles(){/**FUNCION MENU ARBOLES**/
 	}
     fclose(documento);
 }
+/**OK**/void inserArchivoCola(){/**FUNCION PARA INSERTAR ARCHIVOS A LA COLA DESDE ARCHIVO**/
+    char num;
+    FILE *documento;
+ 	documento = fopen ( "Archivo_1Millon.txt", "r" );
+        if(documento == NULL){
+        printf("El archivo no existe o no es posible abirlo");
+    }else{
+        num = getc(documento);
+        while (feof(documento)==0) {
+        ins_FIFO(inicio,fin,num);
+        num = getc(documento);
+        }
+	}
+    fclose(documento);
+}
+
+/**OK**/void inserArchivoLista(){/**FUNCION PARA INSERTAR ARCHIVOS A LA LISTA DESDE ARCHIVO**/
+    char num;
+    FILE *documento;
+ 	documento = fopen ( "Archivo_1Millon.txt", "r" );
+        if(documento == NULL){
+        printf("El archivo no existe o no es posible abirlo");
+    }else{
+        num = getc(documento);
+        while (feof(documento)==0) {
+        ins_FIFO(inicio,fin,num);
+        num = getc(documento);
+        }
+	}
+    fclose(documento);
+}
+
+/**OK**/void inserArchivoArbol(){/**FUNCION PARA INSERTAR ARCHIVOS AL ARBOL DESDE ARCHIVO**/
+    char num;
+    FILE *documento;
+ 	documento = fopen ( "Archivo_1Millon.txt", "r" );
+        if(documento == NULL){
+        printf("El archivo no existe o no es posible abirlo");
+    }else{
+        num = getc(documento);
+        while (feof(documento)==0) {
+        insertar_arbol(arbol,num);
+        num = getc(documento);
+        }
+	}
+    fclose(documento);
+}
+

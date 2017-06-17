@@ -3,7 +3,7 @@
 #include <time.h>
 #include "ARBOLES.h"
 #include "LISTAS.h"
-#define millon 1000
+#define millon 100000
 #include "FUNC_PROY_FIN.h"
 
 /**FUNCION PROGRAMA PRINCIPAL**/

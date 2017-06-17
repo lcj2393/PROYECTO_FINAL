@@ -1,7 +1,7 @@
 /**DEFINIR ASIGNACION DE MEMORIA**/
 #define ReservaMemoria (Nodo*)malloc(sizeof(Nodo))
 
-/**ESTRCUTURA NODO ARBOL**/
+/**ESTRUCTURA NODO ARBOL**/
 struct Nodo{
     int dato;
     Nodo *Izquierda;
@@ -15,10 +15,13 @@ Nodo *arbol=NULL;
 void insNodo(Nodo *&,int);/**FUNCION INSERTAR EN NODO**/
 bool buscNodo(Nodo *,int);/**FUNCION PARA BUSCAR NODOS EN EL ARBOL**/
 void modNodo(Nodo *&,int);/**FUNCION PARA MODIFICAR NODO DEL ARBOL**/
-void impArbol(Nodo *);/**FUNCION PARA IMPRIMIR EL ARBOL**/
+void imparbol(Nodo *);/**FUNCION PARA IMPRIMIR EL ARBOL**/
 void impPosOrder(Nodo *);/**FUNCION PARA IMPRIMIR EL ARBOL POSORDEN**/
 void impPreOrder(Nodo *);/**FUNCION PARA IMPRIMIR EL ARBOL PREORDEN**/
 void impInOrder(Nodo *);/**FUNCION PARA IMPRIMIR EL ARBOL INORDEN**/
+void inOrden(Nodo *);
+void insertar_arbol(Nodo *&, int );
+
 
 Nodo *crearNodo(int n){
     Nodo *nNodo=(Nodo*)malloc(sizeof(Nodo));
@@ -44,22 +47,19 @@ void insNodo(Nodo *&arbol, int n){/**FUNCION INSERTAR EN NODO**/
     }
 }
 bool buscNodo(Nodo *arbol, int n){/**FUNCION PARA BUSCAR NODOS EN EL ARBOL**/
-    int m;
     if(arbol==NULL){
         return false;
     }else{
         if(arbol->dato==n){
             return true;
         }else{
-            printf("Buscar por <1>Izquierda O <2>Derecha: ");
-            scanf("%d",&m);
-            if(m==1){
                 buscNodo(arbol->Izquierda,n);
-            }else{
-                buscNodo(arbol->Derecha,n);
+                if(arbol->dato!=n){
+                    buscNodo(arbol->Derecha,n);
+                }
             }
+            arbol=arbol->Siguiente;
         }
-    }
 }
 void modNodo(Nodo *&arbol, int n){/**FUNCION PARA MODIFICAR UN NODO DEL ARBOL**/
     int nuevoDato, ubicacion;
@@ -109,6 +109,46 @@ void impPosOrder(Nodo *arbol){/**FUNCION PARA IMPRIMIR EL ARBOL POSORDEN**/
         impPosOrder(arbol->Derecha);
         char convert_c2int=arbol->dato;
         printf("%c ",convert_c2int);
+    }
+}
+
+void imp_Arbol(Nodo *arbol, int cont){
+int i;
+	if(arbol == NULL){
+		return;
+	}else{
+		imp_Arbol(arbol -> Derecha, cont += 1);
+		for(i = 0; i < cont; i++){
+			printf("   ");
+		}
+		printf("%d\n", arbol -> dato);
+		imp_Arbol(arbol -> Izquierda, cont += 1);
+	}
+}
+void insertar_arbol(Nodo *&arbol, int n){
+    if(arbol==NULL){
+        Nodo *nuevo_nodo = ReservaMemoria;
+        arbol=nuevo_nodo;
+        nuevo_nodo->dato=n;
+        nuevo_nodo->Izquierda=NULL;
+        nuevo_nodo->Derecha=NULL;
+    }else{
+        int valorRaiz=arbol->dato;
+        if(n<valorRaiz){
+            insertar_arbol(arbol->Izquierda,n);
+        }else{
+            insertar_arbol(arbol->Derecha,n);
+        }
+    }
+}
+
+void inOrden(Nodo *arbol){
+    if(arbol==NULL){
+        return;
+    }else{
+        inOrden(arbol->Izquierda);
+        printf("%d - ",arbol->dato);
+        inOrden(arbol->Derecha);
     }
 }
 
